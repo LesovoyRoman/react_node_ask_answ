@@ -29,7 +29,7 @@ app.use(bodyParser());
 app.use(cors());
 
 // log http requests
-app.use(morgan());
+app.use(morgan('combined'));
 
 // retrieve all questions
 app.get('/', (req, res) => {
@@ -44,5 +44,64 @@ app.get('/', (req, res) => {
     }));
 
     res.send(qs);
+
+});
+
+// get specific question
+app.get('/:id', (req, res) => {
+
+   const question = questions.filter(q => (q.id === parseInt(req.params.id)));
+
+   if (question.length > 1) return res.status(500).send();
+
+   if (question.length === 0) return res.status(404).send();
+
+   res.send(question[0]);
+
+});
+
+// add new question
+app.post('/', (req, res) => {
+
+    const {title, description} = req.body;
+
+    const newQuestion = {
+
+        id: questions.length + 1,
+        title,
+        description,
+        answers: []
+
+    };
+
+    questions.push(newQuestion);
+
+    res.status(200).send();
+
+});
+
+// add new answer
+app.post('/answer/:id', (req, res) => {
+
+   const {answer} = req.body;
+
+   const question = questions.filter(q => (q.id === parseInt(req.params.id)));
+
+    if (question.length > 1) return res.status(500).send();
+
+    if (question.length === 0) return res.status(404).send();
+
+    question[0].answers.push({
+        answer
+    });
+
+    res.status(200).send();
+
+});
+
+// run server
+app.listen(7777, () => {
+
+    console.log('keep calm and listen to port 7777')
 
 });
