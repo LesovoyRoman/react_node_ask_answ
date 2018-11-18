@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {Path_port} from "../App";
 
 class Questions extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Questions extends Component {
     }
 
     async componentDidMount() {
-        const questions = (await axios.get('http://localhost:7777/')).data;
+        const questions = (await axios.get(Path_port)).data;
         this.setState({
             questions,
         });
@@ -26,7 +27,7 @@ class Questions extends Component {
                     {
                         this.state.questions && this.state.questions.map(question => (
                             <div key={question.id} className="col-sm-12 col-md-4 col-lg-3">
-                                <Link to={`/questions/${question.id}`}>
+                                <Link to={`/question/${question.id}`}>
                                     <div className="card text-white bg-info mb-3">
                                         <div className="card-header">Answers: {question.answers_count}</div>
                                         <div className="card-body">
