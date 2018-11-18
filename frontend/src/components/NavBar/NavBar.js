@@ -7,10 +7,10 @@ function NavBar() {
             <Link className="navbar-brand" to="/">
                 Home
             </Link>
-            <Link className="navbar-brand" to="/">
+            <Link className="navbar-brand" to="/register">
                 Register
             </Link>
-            <Link className="navbar-brand" to="/">
+            <Link className="navbar-brand" to="/login">
                 Login
             </Link>
         </nav>
