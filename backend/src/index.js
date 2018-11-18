@@ -22,9 +22,6 @@ const app = express();
 app.use(passport.initialize());
 require('../passport')(passport);
 
-// database
-//const questions = [];
-
 // security helmet
 app.use(helmet());
 
