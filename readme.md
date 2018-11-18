@@ -12,6 +12,5 @@ Newer late to study
      "description": "I am kinda @fullstuck developer but still dont know react..."
    }' localhost:7777
 3) curl -X POST -H 'Content-Type: application/json' -d '{
-        "title": "Easy breezy",
-        "description": "Just like that!"
+        "answer": "Just like that!"
       }' localhost:7777/answer/1
