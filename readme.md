@@ -1,4 +1,4 @@
-# React, Node, MongoDB applications which:
+# React, Node, MongoDB application which:
 1) Authenticates Users
 2) Creates & Gets (Questions & Answers) Unit
 
