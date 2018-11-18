@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Path_port} from "../../App";
 
+const question_path = 'questions/';
+
 class Questions extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +15,7 @@ class Questions extends Component {
     }
 
     async componentDidMount() {
-        const questions = (await axios.get(Path_port)).data;
+        const questions = (await axios.get(Path_port + question_path)).data;
         this.setState({
             questions,
         });

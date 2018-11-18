@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Path_port} from '../../App'
 
+const question_path = 'questions/';
+
 class Question extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +15,7 @@ class Question extends Component {
 
     async componentDidMount() {
         const { match: { params } } = this.props;
-        const question = (await axios.get(Path_port + params.questionId)).data;
+        const question = (await axios.get(Path_port + question_path + params.questionId)).data;
         this.setState({
             question,
         });
