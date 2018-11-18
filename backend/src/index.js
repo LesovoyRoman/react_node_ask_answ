@@ -1,22 +1,23 @@
 // import dependencies
 
 const express = require('express');
-
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
+const passport = require('passport');
 const cors = require('cors');
-
 const helmet = require('helmet');
-
 const morgan = require('morgan');
+const config = require('./db');
 
+mongoose.connect(config.DB, { useNewUrlParser: true }).then(
+    () => {console.log('Database is connected') },
+    err => {console.log('Can not connect to the database ' + err)}
+);
 
 // define the Express app
-
 const app = express();
 
 // database
-
 const questions = [];
 
 // security helmet
@@ -24,6 +25,7 @@ app.use(helmet());
 
 // parse application/json content-type
 app.use(bodyParser());
+app.use(bodyParser.json());
 
 // enable cors
 app.use(cors());
