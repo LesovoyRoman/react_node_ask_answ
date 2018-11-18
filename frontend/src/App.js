@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar/NavBar'
 
 class App extends Component {
   render() {
     return (
       <div>
-        <p>In progress.</p>
+          <NavBar/>
+          <p>In progress.</p>
       </div>
     );
   }
