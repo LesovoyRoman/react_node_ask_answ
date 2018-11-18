@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import {Path_port} from "../App";
+import {Path_port} from "../../App";
 
 class Questions extends Component {
     constructor(props) {

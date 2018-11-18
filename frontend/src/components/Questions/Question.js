@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Path_port} from '../App'
+import {Path_port} from '../../App'
 
 class Question extends Component {
     constructor(props) {
