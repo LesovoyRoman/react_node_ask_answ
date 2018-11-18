@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom'
 import NavBar from './NavBar/NavBar'
 import Questions from './Questions/Questions';
 import Question from "./Questions/Question";
-const Path_port = 'http://localhost:7777/';
+const Path_port = 'http://localhost:7777/api/questions/';
 
 class App extends Component {
     render() {
