@@ -10,6 +10,7 @@ const morgan = require('morgan');
 const config = require('./db');
 
 const users = require('../routes/user');
+//const questions = require('../routes/question');
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
