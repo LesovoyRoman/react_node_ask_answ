@@ -39,7 +39,8 @@ app.get('/', (req, res) => {
         id:             q.id,
         title:          q.title,
         description:    q.description,
-        answers:        q.answers
+        answers:        q.answers,
+        answers_count:  q.answers.length
 
     }));
 
