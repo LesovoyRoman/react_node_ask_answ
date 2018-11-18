@@ -9,6 +9,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('./db');
 
+const users = require('../routes/user');
+
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
     err => {console.log('Can not connect to the database ' + err)}
@@ -16,6 +18,8 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 
 // define the Express app
 const app = express();
+app.use(passport.initialize());
+require('../passport')(passport);
 
 // database
 const questions = [];
