@@ -31,7 +31,7 @@ class App extends Component {
     }
 }
 
-const Path_port = 'http://localhost:7777/api/';
+const Path_port = 'http://localhost:7777';
 
 export default App;
 export {Path_port};

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Path_port} from "../../App";
 
-const question_path = 'questions/';
+const question_path = 'api/questions/';
 
 class Questions extends Component {
     constructor(props) {

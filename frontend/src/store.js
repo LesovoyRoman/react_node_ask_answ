@@ -10,7 +10,7 @@ const devTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOL
 const store = createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(thunk), devTools)
+    compose(applyMiddleware(thunk))
 );
 
 export default store;

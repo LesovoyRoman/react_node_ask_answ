@@ -39,9 +39,12 @@ app.use('/api/questions', questions);
 // log http requests
 app.use(morgan('combined'));
 
-// run server
-app.listen(7777, () => {
+// @todo needs to avoid CORS by proxy (package.json)
+const PORT = process.env.PORT || 7777;
 
-    console.log('keep calm and listen to port 7777')
+// run server
+app.listen(PORT, () => {
+
+    console.log(`keep calm and listen to port ${PORT}`)
 
 });

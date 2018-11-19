@@ -1,9 +1,10 @@
 
 import axios from 'axios';
 import { GET_ERRORS } from "./types";
+import {Path_port} from '../App'
 
 export const registerUser = (user, history) => dispatch => {
-    axios.post('/api/users/register', user)
+    axios.post(Path_port + '/api/users/register', user)
         .then(res => history.push('/login'))
         .catch(err => {
             dispatch({
@@ -14,7 +15,7 @@ export const registerUser = (user, history) => dispatch => {
 }
 
 export const loginUser = (user) => dispatch => {
-    axios.post('/api/users/login', user)
+    axios.post(Path_port + '/api/users/login', user)
         .then(res => {
             console.log(res.data)
         })
