@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Path_port} from "../../App";
 
-const question_path = 'api/questions/';
+const question_path = '/api/questions/';
 
 class Questions extends Component {
     constructor(props) {
@@ -24,6 +24,7 @@ class Questions extends Component {
     render(){
         return (
             <div className="container">
+                <h2 style={{ marginBottom: '40px' }}>Questions</h2>
                 <div className="row">
                     {this.state.questions === null && <p>Loading questions...</p>}
                     {

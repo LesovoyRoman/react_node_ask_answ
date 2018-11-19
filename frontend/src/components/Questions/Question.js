@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Path_port} from '../../App'
 
-const question_path = 'api/questions/';
+const question_path = '/api/questions/';
 
 class Question extends Component {
     constructor(props) {
@@ -26,6 +26,7 @@ class Question extends Component {
         if (question === null) return <p>Loading...</p>;
         return (
             <div className="container">
+                <h2 style={{ marginBottom: '40px' }}>Question</h2>
                 <div className="row">
                     <div className="jumbotron col-12">
                         <h1 className="display-3">{question.title}</h1>
