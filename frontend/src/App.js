@@ -6,12 +6,14 @@ import store from './store';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './setAuthToken';
 import { setCurrentUser, logoutUser } from "./actions/authentication";
+/*import { getQuestions } from "./actions/questions";*/
 
 import NavBar from './components/NavBar/NavBar'
 import Questions from './components/Questions/Questions';
 import Question from "./components/Questions/Question";
 import Register from "./components/Auth/Register"
 import Login from "./components/Auth/Login";
+import CreateQuestion from "./components/Questions/CreateQuestion"
 
 if(localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
@@ -26,6 +28,10 @@ if(localStorage.jwtToken) {
 }
 
 class App extends Component {
+    /*componentDidMount() {
+        store.dispatch(getQuestions());
+    }*/
+
     render() {
         return (
             <Provider store={ store }>
@@ -37,6 +43,7 @@ class App extends Component {
                             <Route exact path="/question/:questionId" component={Question} />
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/login" component={Login} />
+                            <Route exact path="/createQuestion" component={CreateQuestion} />
                         </div>
                     </div>
                 </Router>
@@ -47,5 +54,6 @@ class App extends Component {
 
 const Path_port = 'http://localhost:7777';
 
-export default App;
 export {Path_port};
+
+export default App

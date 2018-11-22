@@ -22,6 +22,7 @@ class Navbar extends Component {
                     <img src={logo} className="App-logo" style={{ width: '40px' }} alt=""/>
                     Home
                 </Link>
+                <Link className="navbar-brand" to="/createQuestion">Create Question</Link>
                 <Link className="navbar-brand" to="#" onClick={this.onLogout.bind(this)}>Logout</Link>
             </nav>
         )

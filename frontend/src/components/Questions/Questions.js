@@ -1,24 +1,36 @@
 import React, {Component} from 'react';
+//import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
+import { getQuestions } from "../../actions/questions";
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {Path_port} from "../../App";
-
-const question_path = '/api/questions/';
 
 class Questions extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            questions: null,
+            questions: this.props.questions,
+            errors: {}
         };
     }
 
-    async componentDidMount() {
-        const questions = (await axios.get(Path_port + question_path)).data;
-        this.setState({
-            questions,
-        });
+    componentDidMount(){
+
+    }
+
+    componentWillReceiveProps(prop){
+        if(prop.questions) {
+            console.log('adad')
+            this.setState({
+                questions: prop.questions
+            })
+        }
+        if(prop.errors) {
+            this.setState({
+                errors: prop.errors
+            })
+        }
     }
 
     render(){
@@ -32,7 +44,6 @@ class Questions extends Component {
                             <div key={question.id} className="col-sm-12 col-md-4 col-lg-3">
                                 <Link to={`/question/${question.id}`}>
                                     <div className="card text-white bg-info mb-3">
-                                        <div className="card-header">Answers: {question.answers_count}</div>
                                         <div className="card-body">
                                             <h4 className="card-title">{question.title}</h4>
                                             <p className="card-text">{question.description}</p>
@@ -48,4 +59,12 @@ class Questions extends Component {
     }
 }
 
-export default Questions;
+Questions.propTypes = {
+ //   questions: PropTypes.array.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    getQuestions: state.questions
+})
+
+export default connect(mapStateToProps, { getQuestions })(withRouter(Questions));
