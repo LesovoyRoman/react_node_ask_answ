@@ -5,16 +5,18 @@ import {Path_port} from '../App'
 
 export const createQuestion = (new_question) => dispatch => {
     return axios.post(Path_port + '/api/questions/create_question', new_question)
-        .then()
+        .then(res => {
+            return res()
+        })
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
-                payload: err.response.data
+                payload: err
             });
         });
 }
 
-export const getQuestions = () => dispatch => {
+export const getQuestions = dispatch => {
     return axios.post(Path_port + '/api/questions/all')
         .then(res => {
             return dispatch(setQuestions(res.data.questions))

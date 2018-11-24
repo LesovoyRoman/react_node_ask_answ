@@ -28,9 +28,6 @@ if(localStorage.jwtToken) {
 }
 
 class App extends Component {
-    /*componentDidMount() {
-        store.dispatch(getQuestions());
-    }*/
 
     render() {
         return (

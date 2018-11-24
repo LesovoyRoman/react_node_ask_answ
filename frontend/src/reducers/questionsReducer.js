@@ -8,8 +8,6 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case SET_QUESTIONS:
-            // @todo nothing happens !
-            console.log('reducer')
             return {
                 ...state,
                 questions: action.payload

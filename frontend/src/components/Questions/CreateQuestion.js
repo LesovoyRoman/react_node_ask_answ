@@ -21,7 +21,11 @@ class CreateQuestion extends Component {
         const new_question = {
             question: this.state.new_question
         }
-        this.props.createQuestion(new_question);
+        this.props.createQuestion(new_question).then(res => {
+            this.props.history.push('/')
+        }).catch(err => {
+            console.log(err)
+        });
     }
 
     handleInputChange(e) {
