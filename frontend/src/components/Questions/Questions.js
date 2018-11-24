@@ -67,4 +67,4 @@ const mapStateToProps = (state) => ({
     questions_received: state.questions
 })
 
-export default connect(mapStateToProps, { getQuestions })(withRouter(Questions));
+export default connect(mapStateToProps)(withRouter(Questions));
