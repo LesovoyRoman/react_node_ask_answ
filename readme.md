@@ -9,13 +9,7 @@
 
 # Run & Usage
 1) cd backend => node src
-2) curl -X POST -H 'Content-Type: application/json' -d '{
-     "title": "How does react work?",
-     "description": "I am kinda @fullstuck developer but still dont know react..."
-   }' localhost:7777/api/questions
-3) curl -X POST -H 'Content-Type: application/json' -d '{
-        "answer": "Just like that!"
-      }' localhost:7777/api/questions/answer/1
+2) cd frontend => npm start
       
 # Links
 1) https://auth0.com/blog/react-tutorial-building-and-securing-your-first-app/
