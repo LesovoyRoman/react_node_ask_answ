@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-import {Path_port} from '../../App'
-
-const question_path = '/api/questions/';
+import classnames from 'classnames';
+import { setAnswer } from './../../actions/answers'
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types'
 
 class Question extends Component {
     constructor(props) {
@@ -10,20 +11,71 @@ class Question extends Component {
 
         this.state = {
             question: null,
+            answers: null,
+            answer: ''
         };
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async componentDidMount() {
-        const { match: { params } } = this.props;
-        const question = (await axios.get(Path_port + question_path + params.questionId)).data;
+    handleInputChange(e) {
         this.setState({
-            question,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        let answer = {
+            description: this.state.answer,
+        }
+        return this.props.setAnswer({ question_id: this.state.question._id, description: answer.description })
+    }
+
+    componentDidMount() {
+        if(!this.props.location.state) return this.props.history.push('/');
+        let question = this.props.location.state;
+        this.setState({
+            question: question.question,
+            answers: question.question.answers
         });
+    }
+
+    componentWillReceiveProps(prop){
+        if(!prop.auth.isAuthenticated) {
+            console.log('not auth')
+            this.props.history.push('/');
+        }
+        if(prop.errors) {
+            this.setState({
+                errors: prop.errors
+            })
+        }
+        if(prop.answer) {
+            let answer_to_answers = this.state.answers.concat(prop.answer);
+            this.setState({ answers: answer_to_answers })
+            this.setState({ answer: '' })
+            console.log(this.state.answers)
+        }
+    }
+
+    renderAnswers(){
+        return (
+            <div>
+                <p>Answers:</p>
+                {
+                    this.state.answers.map((answer, id) => (
+                        <p className="lead" key={`answer${id}`}>{answer.description}</p>
+                    ))
+                }
+            </div>
+        )
     }
 
     render() {
         const {question} = this.state;
         if (question === null) return <p>Loading...</p>;
+
         return (
             <div className="container">
                 <h2 style={{ marginBottom: '40px' }}>Question</h2>
@@ -32,12 +84,26 @@ class Question extends Component {
                         <h1 className="display-3">{question.title}</h1>
                         <p className="lead">{question.description}</p>
                         <hr className="my-4" />
-                        <p>Answers:</p>
-                        {
-                            question.answers.map((answer, id) => (
-                                <p className="lead" key={id}>{answer.answer}</p>
-                            ))
-                        }
+                        { this.state.answers.length > 0 ? this.renderAnswers() : <div><span>No answers yet</span></div>}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="jumbotron col-12">
+                        <form onSubmit={ this.handleSubmit }>
+                            <div className="form-group">
+                                <input
+                                    type="text"
+                                    placeholder="Answer the question"
+                                    className={classnames('form-control form-control-lg')}
+                                    name="answer"
+                                    onChange={ this.handleInputChange }
+                                    value={ this.state.answer }
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary">answer</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -45,4 +111,15 @@ class Question extends Component {
     }
 }
 
-export default Question;
+Question.propTypes = {
+    setAnswer: PropTypes.func.isRequired,
+    answer: PropTypes.object
+}
+
+const mapStateToProps = state => ({
+    errors: state.errors,
+    auth: state.auth,
+    answer: state.answer
+});
+
+export default connect(mapStateToProps, { setAnswer })(withRouter(Question));

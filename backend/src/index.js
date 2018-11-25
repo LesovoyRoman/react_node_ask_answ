@@ -11,6 +11,7 @@ const config = require('./db');
 
 const users = require('../routes/user');
 const questions = require('../routes/question');
+const answers = require('../routes/answer');
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 // API ROUTES
 app.use('/api/users', users);
 app.use('/api/questions', questions);
+app.use('/api/answers', answers);
 
 // log http requests
 app.use(morgan('combined'));

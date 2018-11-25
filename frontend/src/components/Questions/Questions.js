@@ -42,7 +42,7 @@ class Questions extends Component {
                     {
                         this.state.questions && this.state.questions.map(question => (
                             <div key={question._id} className="col-sm-12 col-md-4 col-lg-3">
-                                <Link to={`/question/${question._id}`}>
+                                <Link to={{pathname: `/question/${question._id}`, state: {question: question}}} params={{ question: question }}>
                                     <div className="card text-white bg-info mb-3">
                                         <div className="card-body">
                                             <h4 className="card-title">{question.title}</h4>
@@ -60,11 +60,13 @@ class Questions extends Component {
 }
 
 Questions.propTypes = {
-    questions_received: PropTypes.object.isRequired
+    questions_received: PropTypes.object.isRequired,
+    answer: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
-    questions_received: state.questions
+    questions_received: state.questions,
+    answer: state.answer
 })
 
 export default connect(mapStateToProps)(withRouter(Questions));
