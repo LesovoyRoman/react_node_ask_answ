@@ -61,12 +61,10 @@ class Questions extends Component {
 
 Questions.propTypes = {
     questions_received: PropTypes.object.isRequired,
-    answer: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
     questions_received: state.questions,
-    answer: state.answer
 })
 
 export default connect(mapStateToProps)(withRouter(Questions));

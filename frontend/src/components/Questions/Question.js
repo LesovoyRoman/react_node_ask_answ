@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import classnames from 'classnames';
-import { setAnswer } from './../../actions/answers'
+import { setAnswer, getAnswersQuestion } from './../../actions/answers'
+import store from '../../store'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types'
@@ -10,8 +11,8 @@ class Question extends Component {
         super(props);
 
         this.state = {
-            question: null,
-            answers: null,
+            question: {},
+            answers: [],
             answer: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,13 +38,12 @@ class Question extends Component {
         let question = this.props.location.state;
         this.setState({
             question: question.question,
-            answers: question.question.answers
         });
+        store.dispatch(getAnswersQuestion(this.props.location.state.question._id));
     }
 
     componentWillReceiveProps(prop){
         if(!prop.auth.isAuthenticated) {
-            console.log('not auth')
             this.props.history.push('/');
         }
         if(prop.errors) {
@@ -51,11 +51,12 @@ class Question extends Component {
                 errors: prop.errors
             })
         }
-        if(prop.answer) {
-            let answer_to_answers = this.state.answers.concat(prop.answer);
-            this.setState({ answers: answer_to_answers })
-            this.setState({ answer: '' })
-            console.log(this.state.answers)
+        if(prop.answers) {
+            let answers = prop.answers
+            this.setState({
+                answers: answers.answers,
+                answer: ''
+            })
         }
     }
 
@@ -113,13 +114,13 @@ class Question extends Component {
 
 Question.propTypes = {
     setAnswer: PropTypes.func.isRequired,
-    answer: PropTypes.object
+    answers: PropTypes.object
 }
 
 const mapStateToProps = state => ({
     errors: state.errors,
     auth: state.auth,
-    answer: state.answer
+    answers: state.answers
 });
 
 export default connect(mapStateToProps, { setAnswer })(withRouter(Question));

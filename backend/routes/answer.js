@@ -18,6 +18,26 @@ router.post('/all', (req, res) => {
 
 })
 
+router.post('/question', (req, res) => {
+
+    Answer.find({ question_id: req.body.question_id })
+        .then(answers => {
+            return res.json({
+                success: true,
+                answers: answers,
+                status: 200,
+            });
+        })
+        .catch(err => {
+            return res.json({
+                success: false,
+                errors: err,
+                status: 500,
+            })
+        });
+
+})
+
 router.post('/setAnswer', (req, res) => {
 
     const newAnswer = new Answer({
@@ -26,8 +46,6 @@ router.post('/setAnswer', (req, res) => {
     })
 
     newAnswer.save()
-
-    console.log(newAnswer)
 
     res.json({answer: newAnswer});
 
