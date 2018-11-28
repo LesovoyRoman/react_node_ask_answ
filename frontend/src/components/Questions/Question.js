@@ -35,6 +35,8 @@ class Question extends Component {
 
     componentDidMount() {
         if(!this.props.location.state) return this.props.history.push('/');
+        if(!this.props.auth.isAuthenticated) return this.props.history.push('/');
+
         let question = this.props.location.state;
         this.setState({
             question: question.question,
@@ -43,9 +45,6 @@ class Question extends Component {
     }
 
     componentWillReceiveProps(prop){
-        if(!prop.auth.isAuthenticated) {
-            this.props.history.push('/');
-        }
         if(prop.errors) {
             this.setState({
                 errors: prop.errors

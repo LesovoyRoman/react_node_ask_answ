@@ -16,7 +16,15 @@ router.post('/all', (req, res) => {
                 foreignField: 'question_id',
                 as: 'answers'
             }
-        }
+        },
+        { $lookup:
+                {
+                    from: 'users',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+        },
     ]).then(questions => {
         return res.json({
             success: true,
@@ -52,6 +60,7 @@ router.post('/create_question', (req, res) => {
 
     const newQuestion = new Question({
         description: req.body.question,
+        user_id: req.body.user_id
     });
 
     newQuestion

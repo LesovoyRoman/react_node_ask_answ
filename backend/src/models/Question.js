@@ -8,6 +8,10 @@ const QuestionSchema = new Schema({
         type: String,
         required: true
     },
+    user_id: {
+        type: Schema.ObjectId,
+        required: true
+    }
 
 });
 

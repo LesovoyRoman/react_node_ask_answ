@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { createQuestion } from "../../actions/questions";
+import PropTypes from 'prop-types';
 
 class CreateQuestion extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
-            new_question: ''
+            new_question: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -18,14 +18,15 @@ class CreateQuestion extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-        const new_question = {
-            question: this.state.new_question
-        }
-        this.props.createQuestion(new_question).then(res => {
+        this.props.createQuestion(this.state.new_question, this.props.auth.user.id).then(res => {
             this.props.history.push('/')
         }).catch(err => {
             console.log(err)
         });
+    }
+
+    componentDidMount(){
+        if(!this.props.auth.isAuthenticated) return this.props.history.push('/');
     }
 
     handleInputChange(e) {
@@ -34,9 +35,9 @@ class CreateQuestion extends Component {
         })
     }
 
-    componentDidMount() {
-        if(!this.props.auth.isAuthenticated) {
-            this.props.history.push('/login')
+    componentWillReceiveProps(prop){
+        if(!prop.auth.isAuthenticated) {
+            this.props.history.push('/');
         }
     }
 
@@ -79,8 +80,9 @@ CreateQuestion.propTypes = {
     auth: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => ({
-    auth: state.auth
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors,
 })
 
 export default connect(mapStateToProps, { createQuestion })(withRouter(CreateQuestion))

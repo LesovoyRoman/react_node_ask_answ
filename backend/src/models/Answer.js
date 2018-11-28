@@ -11,6 +11,10 @@ const AnswerSchema = new Schema({
     question_id: {
         type: Schema.ObjectId,
         required: true
+    },
+    user_id: {
+        type: Schema.ObjectId,
+        required: true
     }
 
 })

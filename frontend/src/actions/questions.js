@@ -3,8 +3,11 @@ import axios from 'axios';
 import {GET_ERRORS, SET_QUESTIONS} from "./types";
 import {Path_port} from '../App'
 
-export const createQuestion = (new_question) => dispatch => {
-    return axios.post(Path_port + '/api/questions/create_question', new_question)
+export const createQuestion = (question, user_id) => dispatch => {
+    return axios.post(Path_port + '/api/questions/create_question', {
+        question: question,
+        user_id: user_id
+    })
         .then(res => {
             return res()
         })

@@ -45,8 +45,8 @@ class Questions extends Component {
                                 <Link to={{pathname: `/question/${question._id}`, state: {question: question}}} params={{ question: question }}>
                                     <div className="card text-white bg-info mb-3">
                                         <div className="card-body">
-                                            <h4 className="card-title">{question.title}</h4>
-                                            <p className="card-text">{question.description}</p>
+                                            <p className="card-header" style={{ 'marginBottom': '25px'}}>{question.description}</p>
+                                            {question.user.length !== 0 && <p className="card-text float-right">by {question.user[0].name}</p>}
                                         </div>
                                     </div>
                                 </Link>
