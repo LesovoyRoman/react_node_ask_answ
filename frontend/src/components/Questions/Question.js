@@ -30,7 +30,11 @@ class Question extends Component {
         let answer = {
             description: this.state.answer,
         }
-        return this.props.setAnswer({ question_id: this.state.question._id, description: answer.description })
+        return this.props.setAnswer(
+            answer.description,
+            this.state.question._id,
+            this.props.auth.user.id
+        )
     }
 
     componentDidMount() {

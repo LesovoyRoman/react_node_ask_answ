@@ -1,6 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 // model
 const Answer = require('../src/models/Answer');
@@ -20,17 +21,23 @@ router.post('/all', (req, res) => {
 
 router.post('/question', (req, res) => {
 
+    let question_id = mongoose.Types.ObjectId(req.body.question_id)
+
     Answer.aggregate([
             { $lookup:
                     {
                         from: 'users',
-                        localField: 'id',
-                        foreignField: 'user_id',
+                        localField: 'user_id',
+                        foreignField: '_id',
                         as: 'user'
                     }
             },
+			{ $match:
+				{
+					question_id: question_id,
+				}
+			},
         ])
-        .find({ question_id: req.body.question_id })
         .then(answers => {
             return res.json({
                 success: true,
@@ -52,7 +59,8 @@ router.post('/setAnswer', (req, res) => {
 
     const newAnswer = new Answer({
         description: req.body.description,
-        question_id: req.body.question_id
+        question_id: req.body.question_id,
+        user_id: req.body.user_id
     })
 
     newAnswer.save()

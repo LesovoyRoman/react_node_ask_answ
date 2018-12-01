@@ -2,9 +2,13 @@ import axios from 'axios';
 import {GET_ERRORS, SET_ANSWER, SET_ANSWERS_QUESTIONS} from "./types";
 import {Path_port} from '../App'
 
-export const setAnswer = (answer) => dispatch => {
-    return axios.post(Path_port + '/api/answers/setAnswer', answer)
-        .then(res => {
+export const setAnswer = ( description, question_id, user_id) => dispatch => {
+    return axios.post(Path_port + '/api/answers/setAnswer',
+        {
+            description: description,
+            question_id: question_id,
+            user_id: user_id
+        }).then(res => {
             return dispatch(setAnswerReducer(res.data.answer))
         }).catch(err => {
             dispatch({
