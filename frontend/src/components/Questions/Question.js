@@ -4,6 +4,7 @@ import { setAnswer, getAnswersQuestion } from './../../actions/answers'
 import store from '../../store'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { userInfoData } from './../../helpers/renderInfo'
 import PropTypes from 'prop-types'
 
 class Question extends Component {
@@ -63,28 +64,13 @@ class Question extends Component {
         }
     }
 
-    userInfoAnswer(answer){
-        /**
-         * old answers
-         */
-        if(answer.user) return (
-            <span style={{float: 'right', fontSize: '12px'}}>by {answer.user[0].name}</span>
-        )
-        /**
-         * new answer
-         */
-        return (
-            <span style={{float: 'right', fontSize: '12px'}}>by {this.props.auth.user.name}</span>
-        )
-    }
-
     renderAnswers(){
         return (
             <div>
                 <p>Answers:</p>
                 {
                     this.state.answers.map((answer, id) => (
-                        <p className="lead" key={`answer${id}`}>{answer.description} {this.userInfoAnswer(answer)} </p>
+                        <p className="lead" key={`answer${id}`}>{answer.description} { userInfoData(answer, this.props.auth.user) }</p>
                     ))
                 }
             </div>

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { getQuestions } from "../../actions/questions";
 import {Link} from 'react-router-dom';
 import store from './../../store';
+import { userInfoData } from './../../helpers/renderInfo'
 
 class Questions extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class Questions extends Component {
                                     <div className="card text-white bg-info mb-3">
                                         <div className="card-body">
                                             <p className="card-header" style={{ 'marginBottom': '25px'}}>{question.description}</p>
-                                            {question.user.length !== 0 && <p className="card-text float-right">by {question.user[0].name}</p>}
+                                            {question.user.length !== 0 && <p className="card-text float-right"> { userInfoData(question, this.props.auth.user || {id: -1}) }</p>}
                                         </div>
                                     </div>
                                 </Link>
@@ -65,6 +66,7 @@ Questions.propTypes = {
 
 const mapStateToProps = (state) => ({
     questions_received: state.questions,
+    auth: state.auth,
 })
 
 export default connect(mapStateToProps)(withRouter(Questions));
