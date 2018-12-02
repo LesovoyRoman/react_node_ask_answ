@@ -55,6 +55,18 @@ router.get('/:id', (req, res) => {
 
 });
 
+// update specific question
+router.get('/update_question', (req, res) => {
+
+    let questionToUpdate = Question.findOne({id: req.body.id});
+
+    questionToUpdate.description = req.body.description
+    questionToUpdate.save()
+
+    res.json(questionToUpdate)
+
+})
+
 // add new question
 router.post('/create_question', (req, res) => {
 
@@ -63,8 +75,7 @@ router.post('/create_question', (req, res) => {
         user_id: req.body.user_id
     });
 
-    newQuestion
-        .save()
+    newQuestion.save()
 
     res.json(newQuestion)
 

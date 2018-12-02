@@ -17,7 +17,7 @@ class Question extends Component {
             answer: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmitAnswer = this.handleSubmitAnswer.bind(this);
     }
 
     handleInputChange(e) {
@@ -26,7 +26,7 @@ class Question extends Component {
         })
     }
 
-    handleSubmit(e) {
+    handleSubmitAnswer(e) {
         e.preventDefault();
         let answer = {
             description: this.state.answer,
@@ -36,6 +36,13 @@ class Question extends Component {
             this.state.question._id,
             this.props.auth.user.id
         )
+    }
+
+    handleSubmitUpdate(e) {
+        e.preventDefault();
+       /* let question = {
+            description: this.question.description
+        }*/
     }
 
     componentDidMount() {
@@ -77,24 +84,61 @@ class Question extends Component {
         )
     }
 
-    render() {
-        const {question} = this.state;
-        if (question === null) return <p>Loading...</p>;
+    updateQuestion() {
 
+        if(this.state.question === null) return <p>Loading...</p>;
+
+        if(this.props.auth.isAuthenticated && this.props.auth.user.id === this.state.question.user_id) return (
+            <div>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        placeholder="Title the question"
+                        className={classnames('form-control form-control-lg')}
+                        name="titleQuestion"
+                        onChange={ this.handleInputChange }
+                        value={ this.state.question.title }
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        placeholder="Question"
+                        className={classnames('form-control form-control-lg')}
+                        name="question"
+                        onChange={ this.handleInputChange }
+                        value={ this.state.question.description }
+                    />
+                </div>
+
+                <button className={classnames('btn btn-info')} onClick={ this.handleSubmitUpdate }>save</button>
+            </div>
+        )
+
+        return (
+            <div>
+                <h1 className="display-3">{this.state.question.title}</h1>
+                <p className="lead">{this.state.question.description}</p>
+            </div>
+        )
+    }
+
+    render() {
         return (
             <div className="container">
                 <h2 style={{ marginBottom: '40px' }}>Question</h2>
                 <div className="row">
                     <div className="jumbotron col-12">
-                        <h1 className="display-3">{question.title}</h1>
-                        <p className="lead">{question.description}</p>
+
+                        { this.updateQuestion() }
+
                         <hr className="my-4" />
                         { this.state.answers.length > 0 ? this.renderAnswers() : <div><span>No answers yet</span></div>}
                     </div>
                 </div>
                 <div className="row">
                     <div className="jumbotron col-12">
-                        <form onSubmit={ this.handleSubmit }>
+                        <form onSubmit={ this.handleSubmitAnswer }>
                             <div className="form-group">
                                 <input
                                     type="text"

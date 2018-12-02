@@ -19,6 +19,22 @@ export const createQuestion = (question, user_id) => dispatch => {
         });
 }
 
+export const updateQuestion = (question) => dispatch => {
+    return axios.post(Path_port + '/api/questions/update_question', {
+        description: question.description,
+        id: question._id
+    })
+        .then(res => {
+            return res()
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err
+            });
+        });
+}
+
 export const getQuestions = dispatch => {
     return axios.post(Path_port + '/api/questions/all')
         .then(res => {

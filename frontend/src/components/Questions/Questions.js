@@ -34,6 +34,27 @@ class Questions extends Component {
         }
     }
 
+    getSpecificQuestion(question){
+        if(this.props.auth.isAuthenticated) return (
+            <Link to={{pathname: `/question/${question._id}`, state: {question: question}}} params={{ question: question }}>
+                <div className="card text-white bg-info mb-3">
+                    <div className="card-body">
+                        <p className="card-header" style={{ 'marginBottom': '25px'}}>{question.description}</p>
+                        {question.user.length !== 0 && <p className="card-text float-right"> { userInfoData(question, this.props.auth.user || {id: -1}) }</p>}
+                    </div>
+                </div>
+            </Link>
+        )
+        return (
+            <div className="card text-white bg-info mb-3">
+                <div className="card-body">
+                    <p className="card-header" style={{ 'marginBottom': '25px'}}>{question.description}</p>
+                    {question.user.length !== 0 && <p className="card-text float-right"> { userInfoData(question, this.props.auth.user || {id: -1}) }</p>}
+                </div>
+            </div>
+        )
+    }
+
     render(){
         return (
             <div className="container">
@@ -43,14 +64,7 @@ class Questions extends Component {
                     {
                         this.state.questions && this.state.questions.map(question => (
                             <div key={question._id} className="col-sm-12 col-md-4 col-lg-3">
-                                <Link to={{pathname: `/question/${question._id}`, state: {question: question}}} params={{ question: question }}>
-                                    <div className="card text-white bg-info mb-3">
-                                        <div className="card-body">
-                                            <p className="card-header" style={{ 'marginBottom': '25px'}}>{question.description}</p>
-                                            {question.user.length !== 0 && <p className="card-text float-right"> { userInfoData(question, this.props.auth.user || {id: -1}) }</p>}
-                                        </div>
-                                    </div>
-                                </Link>
+                                { this.getSpecificQuestion(question) }
                             </div>
                         ))
                     }

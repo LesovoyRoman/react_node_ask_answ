@@ -55,6 +55,18 @@ router.post('/question', (req, res) => {
 
 })
 
+// update specific answer
+router.get('/update_answer', (req, res) => {
+
+    let answerToUpdate = Answer.findOne({id: req.body.id});
+
+    answerToUpdate.description = req.body.description
+    answerToUpdate.save()
+
+    res.json(answerToUpdate)
+
+})
+
 router.post('/setAnswer', (req, res) => {
 
     const newAnswer = new Answer({
