@@ -5,6 +5,7 @@ import store from '../../store'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { userInfoData } from './../../helpers/renderInfo'
+import { updateQuestion } from './../../actions/questions'
 import PropTypes from 'prop-types'
 
 class Question extends Component {
@@ -20,13 +21,21 @@ class Question extends Component {
         this.handleSubmitAnswer = this.handleSubmitAnswer.bind(this);
     }
 
-    handleInputChange(e) {
+    handleInputQuestionUpdate = (e) => {
+        let question = this.state.question;
+        question.description = e.target.value;
+        this.setState({
+            question: question
+        })
+    }
+
+    handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
-    handleSubmitAnswer(e) {
+    handleSubmitAnswer = (e) => {
         e.preventDefault();
         let answer = {
             description: this.state.answer,
@@ -38,11 +47,11 @@ class Question extends Component {
         )
     }
 
-    handleSubmitUpdate(e) {
+    handleSubmitUpdate = (e) => {
         e.preventDefault();
-       /* let question = {
-            description: this.question.description
-        }*/
+        let question = this.state.question;
+
+        store.dispatch(updateQuestion(question));
     }
 
     componentDidMount() {
@@ -93,20 +102,10 @@ class Question extends Component {
                 <div className="form-group">
                     <input
                         type="text"
-                        placeholder="Title the question"
-                        className={classnames('form-control form-control-lg')}
-                        name="titleQuestion"
-                        onChange={ this.handleInputChange }
-                        value={ this.state.question.title }
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
                         placeholder="Question"
                         className={classnames('form-control form-control-lg')}
                         name="question"
-                        onChange={ this.handleInputChange }
+                        onChange={ this.handleInputQuestionUpdate }
                         value={ this.state.question.description }
                     />
                 </div>
@@ -117,7 +116,6 @@ class Question extends Component {
 
         return (
             <div>
-                <h1 className="display-3">{this.state.question.title}</h1>
                 <p className="lead">{this.state.question.description}</p>
             </div>
         )

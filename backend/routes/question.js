@@ -56,14 +56,17 @@ router.get('/:id', (req, res) => {
 });
 
 // update specific question
-router.get('/update_question', (req, res) => {
+router.post('/update_question', (req, res) => {
 
-    let questionToUpdate = Question.findOne({id: req.body.id});
+    Question.findById(req.body.id, function (err, question) {
+        if (err) return res.status(404).json(question);
 
-    questionToUpdate.description = req.body.description
-    questionToUpdate.save()
-
-    res.json(questionToUpdate)
+        question.set({ description: req.body.description });
+        question.save(function (err, updatedQuestion) {
+            if (err) res.status(404).json(question);
+            res.status(200).send(updatedQuestion);
+        });
+    });
 
 })
 
